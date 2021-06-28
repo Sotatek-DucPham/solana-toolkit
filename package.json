@@ -1,0 +1,53 @@
+{
+  "name": "toolkit",
+  "version": "0.0.1",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solana-labs/example-helloworld"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/client/main.ts",
+    "start-with-test-validator": "start-server-and-test 'solana-test-validator --reset --quiet' http://localhost:8899/health start",
+    "lint": "eslint --ext .ts src/client/* && prettier --check \"src/client/**/*.ts\"",
+    "lint:fix": "eslint --ext .ts src/client/* --fix && prettier --write \"src/client/**/*.ts\"",
+    "clean": "npm run clean:program-c && npm run clean:program-rust",
+    "build:program-c": "V=1 make -C ./src/program-c helloworld",
+    "clean:program-c": "V=1 make -C ./src/program-c clean",
+    "build:program-rust": "cargo build-bpf --manifest-path=./src/program-rust/Cargo.toml --bpf-out-dir=dist/program",
+    "clean:program-rust": "cargo clean --manifest-path=./src/program-rust/Cargo.toml && rm -rf ./dist",
+    "test:program-rust": "cargo test-bpf --manifest-path=./src/program-rust/Cargo.toml",
+    "pretty": "prettier --write '{,src/**/}*.ts'",
+    "build:hello-world": "cargo build-bpf --manifest-path=./src/program/hello-world/Cargo.toml --bpf-out-dir=./src/program/hello-world/dist",
+    "build:token": "cargo build-bpf --manifest-path=./src/program/token/Cargo.toml --bpf-out-dir=./src/program/token/dist"
+  },
+  "dependencies": {
+    "@solana/spl-token": "^0.1.6",
+    "@solana/web3.js": "^1.18.0",
+    "bn.js": "^5.2.0",
+    "borsh": "^0.4.0",
+    "buffer": "^6.0.3",
+    "buffer-layout": "^1.2.1",
+    "dotenv": "^10.0.0",
+    "mz": "^2.7.0",
+    "yaml": "^1.10.2"
+  },
+  "devDependencies": {
+    "@types/mz": "^2.7.3",
+    "@types/yaml": "^1.9.7",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.1",
+    "start-server-and-test": "^1.12.5",
+    "ts-loader": "^9.2.3",
+    "ts-node": "^10.0.0",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.3.4"
+  }
+}
